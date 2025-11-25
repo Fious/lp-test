@@ -44,11 +44,11 @@ helm upgrade {release-name} -f {custom-values.yaml} -n {namespace}
 
 Rolling back to the previous revision number:
 ```
-helm rollback {release-name}
+helm rollback {release-name} -n {namespace}
 ```
 If you wish to rollback to a different revision, please run `helm history {release-name}` to find the release revision then run:
 ```
-helm rollback {release-name} [REVISION]
+helm rollback {release-name} [REVISION] -n {namespace}
 ```
 
 # Key Values in values.yaml
