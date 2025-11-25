@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.global.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  ingressClassName: {{ .Values.global.ingressClassName }}
+  {{- if and .Values.global.ingress.tls.enabled .Values.global.ingress.tls.existingSecretName }}
+  tls:
+    - hosts: 
+      - {{ .Values.global.ingress.host }}
+      secretName: {{ .Values.global.ingress.tls.existingSecretName }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.global.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-editor
+                port:
+                  name: http
+          - path: /render
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-renderer
+                port:
+                  name: http
+          - path: /assets
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-assets
+                port:
+                  name: http

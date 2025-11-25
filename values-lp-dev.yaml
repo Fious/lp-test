@@ -1,0 +1,74 @@
+# Default values for landing-page.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  ingress:
+    host: lp.dev.example.com
+    # When TLS is enabled, please provide an existing valid TLS secret for the host
+    tls:
+      enabled: false
+      existingSecretName:
+    ingressClassName:
+    # annotations to be added to the main ingress
+    annotations: {}
+
+editor:
+  replicaCount: 1
+  autoscaling:
+    enabled: true
+  image:
+    repository: nginx
+    tag: stable
+  logLevel: debug
+  resources: 
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+
+renderer:
+  replicaCount: 1
+  autoscaling:
+    enabled: true
+  image:
+    repository: nginx
+    tag: stable
+  logLevel: debug
+  resources: 
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+
+assets:
+  replicaCount: 1
+  image:
+    repository: nginx
+    tag: stable
+  logLevel: debug
+  resources: 
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+
+publisher:
+  replicaCount: 1
+  image:
+    repository: nginx
+    tag: stable
+  logLevel: debug
+  resources: 
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
